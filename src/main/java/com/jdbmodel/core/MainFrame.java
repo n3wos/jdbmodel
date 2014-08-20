@@ -154,7 +154,7 @@ public class MainFrame extends javax.swing.JFrame {
 //                    break;
 //                }
 //            }
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+           // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
