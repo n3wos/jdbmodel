@@ -3,7 +3,7 @@ package com.jdbmodel.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project {
+public class Schema {
     
     private List<Sequence> sequences = new ArrayList<Sequence>(1);
     private List<Table> tables = new ArrayList<Table>(1);
