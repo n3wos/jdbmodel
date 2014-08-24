@@ -7,7 +7,7 @@ import com.jdbmodel.dao.Table.Field;
 
 public class Reference {
     private Table table;
-    private List<Field> fields = new ArrayList<Field>(1);
+    private List<Field> fields = new ArrayList<>(1);
 
     public Table getTable() {
         return table;

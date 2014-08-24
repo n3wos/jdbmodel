@@ -2,17 +2,22 @@ package com.jdbmodel.core;
 
 import com.jdbmodel.dao.DbProfile;
 import com.jdbmodel.dao.Schema;
+import com.jdbmodel.dao.Sequence;
+import com.jdbmodel.dao.Table;
 import com.jdbmodel.dao.reverse.ReverseEngineer;
 import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("jdbmodeller");
     }
     
     @SuppressWarnings("unchecked")
@@ -21,7 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jtree = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         canvas = new Canvas();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -45,9 +50,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Schema");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane1.setViewportView(jTree1);
+        jtree.setModel(null);
+        jScrollPane1.setViewportView(jtree);
 
         canvas.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -78,16 +82,20 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.add(menuOpen);
 
         jMenu3.setText("Reopen");
+        jMenu3.setEnabled(false);
         jMenu1.add(jMenu3);
         jMenu1.add(jSeparator1);
 
         menuSave.setText("Save");
+        menuSave.setEnabled(false);
         jMenu1.add(menuSave);
 
         menuSaveAs.setText("Save As ...");
+        menuSaveAs.setEnabled(false);
         jMenu1.add(menuSaveAs);
 
         jMenu5.setText("Export As ...");
+        jMenu5.setEnabled(false);
         jMenu1.add(jMenu5);
         jMenu1.add(jSeparator2);
 
@@ -104,9 +112,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu2.setText("Connection");
 
         jMenuItem2.setText("New");
+        jMenuItem2.setEnabled(false);
         jMenu2.add(jMenuItem2);
 
         profilesManage.setText("Manage");
+        profilesManage.setEnabled(false);
         jMenu2.add(profilesManage);
 
         jMenuBar1.add(jMenu2);
@@ -163,14 +173,40 @@ public class MainFrame extends javax.swing.JFrame {
             schema = ReverseEngineer.reverse(profile);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, 
-                    "Reverse engineer failed:", "Error", JOptionPane.ERROR_MESSAGE);
+                    "Reverse engineer failed:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return;
         }
         
         // initialize
-        canvas.setBackground(Color.WHITE);
-        //TODO: draw tables & constraints
+        if (schema != null) {
+            showSchema();
+        }
     }//GEN-LAST:event_menuNewActionPerformed
 
+    private void showSchema() {
+        canvas.setBackground(Color.WHITE);
+        
+        // populate jtree hierarchy
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Schema");
+        DefaultMutableTreeNode tablesNode = new DefaultMutableTreeNode("Tables");
+        for (Table t: schema.getTables()) {
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(t.getName());
+            tablesNode.add(node);
+        }
+        
+        DefaultMutableTreeNode sequencesNode = new DefaultMutableTreeNode("Sequences");
+        for (Sequence s: schema.getSequences()) {
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(s.getName());
+            sequencesNode.add(node);
+        }
+        
+        root.add(tablesNode);
+        root.add(sequencesNode);
+        jtree.setModel(new DefaultTreeModel(root));
+        jtree.setShowsRootHandles(true);
+    }
+    
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -204,7 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JTree jtree;
     private javax.swing.JMenuItem menuExit;
     private javax.swing.JMenuItem menuNew;
     private javax.swing.JMenuItem menuOpen;

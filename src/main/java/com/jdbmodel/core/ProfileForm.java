@@ -14,6 +14,7 @@ public class ProfileForm extends javax.swing.JDialog {
     public ProfileForm(Dialog owner, boolean modal) {
         super(owner, modal);
         initComponents();
+        setTitle("Database Connection");
         setLocationRelativeTo(null);
         setResizable(false);
     }

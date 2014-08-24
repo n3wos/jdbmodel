@@ -1,7 +1,6 @@
 package com.jdbmodel.dao;
 
 public class Sequence {
-    
     private String name;
     private long start;
     private long stop;

@@ -25,6 +25,7 @@
             <Menu class="javax.swing.JMenu" name="jMenu3">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reopen"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Menu>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
@@ -32,16 +33,19 @@
             <MenuItem class="javax.swing.JMenuItem" name="menuSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuSaveAs">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save As ..."/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu5">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Export As ..."/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Menu>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
@@ -64,11 +68,13 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="New"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="profilesManage">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manage"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -147,10 +153,10 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTree" name="jTree1">
+        <Component class="javax.swing.JTree" name="jtree">
           <Properties>
-            <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
-              <TreeModel code="Schema&#xa;"/>
+            <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="null" type="code"/>
             </Property>
           </Properties>
         </Component>

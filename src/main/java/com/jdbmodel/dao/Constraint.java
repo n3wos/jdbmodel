@@ -8,22 +8,23 @@ import com.jdbmodel.dao.Table.Field;
 public class Constraint {
       
     public enum Type {
+        NONE,
         PK,
         FK,
         INDEX,
         UNIQUE,
     };
     
-    private String table;
+    private Table table;
     private Type type;
-    private List<Field> fields = new ArrayList<Field>(1);
-    private List<Reference> references = new ArrayList<Reference>(1);
+    private List<Field> fields = new ArrayList<>(1);
+    private List<Reference> references = new ArrayList<>(1);
 
-    public String getTable() {
+    public Table getTable() {
         return table;
     }
 
-    public void setTable(String table) {
+    public void setTable(Table table) {
         this.table = table;
     }
 
