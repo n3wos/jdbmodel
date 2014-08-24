@@ -1,13 +1,13 @@
 
 package com.jdbmodel.dao;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.jdbmodel.dao.Table.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Reference {
     private Table table;
-    private List<Field> fields = new ArrayList<>(1);
+    private Map<String, Field> fields = new HashMap<>();
 
     public Table getTable() {
         return table;
@@ -17,15 +17,15 @@ public class Reference {
         this.table = table;
     }
 
-    public List<Field> getFields() {
+    public Map<String, Field> getFields() {
         return fields;
     }
 
-    public void setFields(List<Field> fields) {
+    public void setFields(Map<String, Field> fields) {
         this.fields = fields;
     }
     
     public void addField(Field f) {
-        fields.add(f);
+        fields.put(f.getName(), f);
     }
 }

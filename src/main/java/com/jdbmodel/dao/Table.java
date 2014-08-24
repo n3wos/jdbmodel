@@ -1,8 +1,8 @@
 
 package com.jdbmodel.dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Table {
     
@@ -73,15 +73,15 @@ public class Table {
     }
     
     private String name;
-    private List<Field> fields = new ArrayList<>(1);
-    private List<Constraint> constraints = new ArrayList<>(1);
+    private Map<String, Field> fields = new HashMap<>();
+    private Map<String, Constraint> constraints = new HashMap<>();
     
     public void addField(Field f) {
-        fields.add(f);
+        fields.put(f.getName(), f);
     }
     
     public void addConstraint(Constraint c) {
-        constraints.add(c);
+        constraints.put(c.getName(), c);
     }
 
     public String getName() {
@@ -92,19 +92,19 @@ public class Table {
         this.name = name;
     }
 
-    public List<Field> getFields() {
+    public Map<String, Field> getFields() {
         return fields;
     }
 
-    public void setFields(List<Field> fields) {
+    public void setFields(Map<String, Field> fields) {
         this.fields = fields;
     }
 
-    public List<Constraint> getConstraints() {
+    public Map<String, Constraint> getConstraints() {
         return constraints;
     }
 
-    public void setConstraints(List<Constraint> constraints) {
+    public void setConstraints(Map<String, Constraint> constraints) {
         this.constraints = constraints;
     }
 }

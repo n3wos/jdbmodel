@@ -17,6 +17,9 @@ public class ProfileForm extends javax.swing.JDialog {
         setTitle("Database Connection");
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        this.getRootPane().setDefaultButton(okButton);
+        okButton.requestFocus();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -55,6 +58,7 @@ public class ProfileForm extends javax.swing.JDialog {
         jLabel4.setText("Alias:");
 
         okButton.setText("Connect");
+        okButton.setSelected(true);
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);

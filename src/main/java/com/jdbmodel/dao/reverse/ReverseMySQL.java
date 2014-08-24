@@ -3,6 +3,7 @@ package com.jdbmodel.dao.reverse;
 
 import com.jdbmodel.dao.Constraint;
 import com.jdbmodel.dao.DbProfile;
+import com.jdbmodel.dao.Reference;
 import com.jdbmodel.dao.Schema;
 import com.jdbmodel.dao.Table;
 import com.jdbmodel.dao.Table.Field;
@@ -37,8 +38,8 @@ public class ReverseMySQL {
         }
 
         // gather info for each table
-        for (Table t: schema.getTables()) {
-            rs = statement.executeQuery("describe " + t.getName());
+        for (Table t: schema.getTables().values()) {
+            rs = statement.executeQuery("describe `" + t.getName() + "`");
             System.out.println("Table "+t.getName() + " {");
             
             while (rs.next()) {
@@ -111,11 +112,52 @@ public class ReverseMySQL {
                 t.addField(f);
             }
             System.out.println("}\n");
-
-            // indexes for table
-            //rs = statement.executeQuery("select * FROM USER_INDEXES WHERE table_name = " + name);
-            //SHOW INDEX FROM test1
+        }
+        
+        // constraints
+        for (Table t: schema.getTables().values()) {
+            System.out.println("Table "+t.getName() + " {");
+            rs = statement.executeQuery(
+                    "select COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME " + 
+                    "from information_schema.KEY_COLUMN_USAGE where TABLE_NAME = \"" + t.getName() + "\""); //TODO: use parameter binding
             
+            while (rs.next()) {
+                String field = rs.getString("COLUMN_NAME");
+                String cname = rs.getString("CONSTRAINT_NAME");
+                String refTable = rs.getString("REFERENCED_TABLE_NAME");
+                String refColumn = rs.getString("REFERENCED_COLUMN_NAME");
+                
+                if (refTable == null || refColumn == null) {
+                    System.out.println("\tConstraint " + cname + " - not FK, skipped");
+                    continue;
+                } else {
+                    System.out.println("\tConstraint " + cname + " - OK");
+                }
+                
+                cname = cname.toUpperCase();
+                refTable = refTable.toUpperCase();
+                refColumn = refColumn.toUpperCase();
+                
+                Constraint c = new Constraint();
+                {
+                    c.setName(cname);
+                    c.setType(Constraint.Type.FK);
+                    c.setTable(t);
+                    c.addField(t.getFields().get(field));
+
+                    Reference ref = new Reference();
+                    {
+                        Table tRef = schema.getTables().get(refTable);
+                        ref.setTable(tRef);
+                        ref.addField(tRef.getFields().get(refColumn));
+                    }
+                    c.addReference(null);
+                }
+                t.addConstraint(c);
+                
+                schema.addConstraint(c); // global list
+            }
+            System.out.println("}\n");
         }
 
         return schema;

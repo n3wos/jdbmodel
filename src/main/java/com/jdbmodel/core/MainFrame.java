@@ -190,13 +190,13 @@ public class MainFrame extends javax.swing.JFrame {
         // populate jtree hierarchy
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Schema");
         DefaultMutableTreeNode tablesNode = new DefaultMutableTreeNode("Tables");
-        for (Table t: schema.getTables()) {
+        for (Table t: schema.getTables().values()) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(t.getName());
             tablesNode.add(node);
         }
         
         DefaultMutableTreeNode sequencesNode = new DefaultMutableTreeNode("Sequences");
-        for (Sequence s: schema.getSequences()) {
+        for (Sequence s: schema.getSequences().values()) {
             DefaultMutableTreeNode node = new DefaultMutableTreeNode(s.getName());
             sequencesNode.add(node);
         }
@@ -205,6 +205,9 @@ public class MainFrame extends javax.swing.JFrame {
         root.add(sequencesNode);
         jtree.setModel(new DefaultTreeModel(root));
         jtree.setShowsRootHandles(true);
+        
+        // must draw
+        ((Canvas)canvas).recompute(schema);
     }
     
     public static void main(String args[]) {

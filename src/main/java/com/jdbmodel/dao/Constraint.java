@@ -6,7 +6,7 @@ import java.util.List;
 import com.jdbmodel.dao.Table.Field;
 
 public class Constraint {
-      
+
     public enum Type {
         NONE,
         PK,
@@ -15,11 +15,20 @@ public class Constraint {
         UNIQUE,
     };
     
+    private String name;
     private Table table;
     private Type type;
     private List<Field> fields = new ArrayList<>(1);
     private List<Reference> references = new ArrayList<>(1);
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public Table getTable() {
         return table;
     }

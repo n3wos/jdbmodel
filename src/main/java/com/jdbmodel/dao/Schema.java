@@ -1,13 +1,13 @@
 package com.jdbmodel.dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Schema {
     private String name;
-    private List<Sequence> sequences = new ArrayList<>(1);
-    private List<Table> tables = new ArrayList<>(1);
-    private List<Constraint> constraints = new ArrayList<>(1);
+    private Map<String, Sequence> sequences = new HashMap<>();
+    private Map<String, Table> tables = new HashMap<>();
+    private Map<String, Constraint> constraints = new HashMap<>();
     
     public Schema() { }
     
@@ -15,40 +15,40 @@ public class Schema {
         this.name = name;
     }
 
-    public List<Sequence> getSequences() {
+    public Map<String, Sequence> getSequences() {
         return sequences;
     }
 
-    public void setSequences(List<Sequence> sequences) {
+    public void setSequences(Map<String, Sequence> sequences) {
         this.sequences = sequences;
     }
 
-    public List<Table> getTables() {
+    public Map<String, Table> getTables() {
         return tables;
     }
 
-    public void setTables(List<Table> tables) {
+    public void setTables(Map<String, Table> tables) {
         this.tables = tables;
     }
     
     public void addTable(Table t) {
-        this.tables.add(t);
+        this.tables.put(t.getName(), t);
     }
     
     public void addSequence(Sequence s) {
-        this.sequences.add(s);
+        this.sequences.put(s.getName(), s);
     }
 
-    public List<Constraint> getConstraints() {
+    public Map<String, Constraint> getConstraints() {
         return constraints;
     }
 
-    public void setConstraints(List<Constraint> constraints) {
+    public void setConstraints(Map<String, Constraint> constraints) {
         this.constraints = constraints;
     }
     
     public void addConstraint(Constraint c) {
-        constraints.add(c);
+        constraints.put(c.getName(), c);
     }
 
     public String getName() {

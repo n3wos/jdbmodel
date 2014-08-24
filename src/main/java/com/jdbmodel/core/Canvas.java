@@ -1,5 +1,6 @@
 package com.jdbmodel.core;
 
+import com.jdbmodel.dao.Schema;
 import com.jdbmodel.dao.Table;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -17,8 +18,16 @@ public class Canvas extends JPanel {
     final int CORNER_SIZE = 10;
     final int TAB_SIZE = 15;
     
-    private void drawTable(Graphics2D g2, Table t, int x, int y, int w, int h) {
+    private Schema schema;
+    
+    public void recompute(Schema schema) {
+        this.schema = schema;
         
+        //TODO: recompute graphics
+        
+    }
+    
+    private void drawTable(Graphics2D g2, Table t, int x, int y, int w, int h) {
         // header
         GradientPaint grad = new GradientPaint(x, y, TOP_HEADER, x, y+HEADER_HEIGHT/2, Color.WHITE, true);
         g2.setPaint(grad);
